@@ -1,0 +1,23 @@
+{
+  "name": "identra",
+  "version": "1.0.0",
+  "description": "SSO microservice for centralized authentication, JWT signing, and public key management.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^26.6.4",
+    "tsc": "^2.0.4",
+    "tsx": "^4.23.15",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^6.19.3",
+    "fastify": "^5.12.5",
+    "prisma": "^6.19.3"
+  }
+}
