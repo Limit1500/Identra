@@ -1,13 +1,13 @@
 import net from "node:net";
-import { validateCredentials } from "./protocol/validation";
+import keyService from "./keys/keyService";
 
 export default function startTCPServer() {
   const server = net.createServer((socket) => {
-    console.log("User connected!");
+    console.log("Client connected!");
 
     socket.on("data", (data: Buffer) => {
       try {
-        const [name, secret] = validateCredentials(data);
+        socket.write(JSON.stringify(keyService.getAllKeyPairsWrapped()));
       } catch (error: unknown) {
         if (error instanceof Error) {
           console.error(error.message);

@@ -7,8 +7,9 @@ import {
   PRIVATE_KEY_FORMAT,
   PUBLIC_KEY_FORMAT,
 } from "./helpers/config";
-import type { KeyPair } from "./helpers/types";
+import type { KeyPair, PublicKeyInfo } from "./helpers/types";
 import StorageService from "./storageService";
+import { toPublicKeyInfo } from "./helpers/wrapper";
 
 class KeyService {
   private keys: KeyPair[] = [];
@@ -26,6 +27,10 @@ class KeyService {
     setInterval(() => {
       this.rotateKeysIfNeeded();
     }, KEY_CHECK_INTERVAL);
+  }
+
+  getAllKeyPairsWrapped(): PublicKeyInfo[] {
+    return this.keys.map((key) => toPublicKeyInfo(key));
   }
 
   private rotateKeysIfNeeded(): void {
