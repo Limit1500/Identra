@@ -5,7 +5,8 @@ node_modules/
 .env.*
 
 # Generated Prisma client
-/src/generated/prisma
+/prisma/generated/prisma
 
-# Cryptographic keys
-*.pem
+# Key storage
+/src/keys/storage
+

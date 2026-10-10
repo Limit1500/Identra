@@ -3,6 +3,7 @@ import {
   KEY_CHECK_INTERVAL,
   KEY_ENCODING,
   KEY_RETENTION_PERIOD,
+  KEY_ROTATION_INTERVAL,
   MODULUS_LENGTH,
   PRIVATE_KEY_FORMAT,
   PUBLIC_KEY_FORMAT,
@@ -33,11 +34,22 @@ class KeyService {
     return this.keys.map((key) => toPublicKeyInfo(key));
   }
 
+  getActivePair(): KeyPair {
+    const activeKeyPair = this.keys.find(
+      (keyPair) => keyPair.kid === this.activeKeyKid
+    );
+
+    if (!activeKeyPair) {
+      throw new Error("Active key pair not found");
+    }
+
+    return activeKeyPair;
+  }
+
   private rotateKeysIfNeeded(): void {
     const createdAt = Number(this.activeKeyKid.split("-")[0]);
-    const rotationInterval = 30 * 24 * 60 * 60 * 1000;
 
-    if (Date.now() - createdAt >= rotationInterval) {
+    if (Date.now() - createdAt >= KEY_ROTATION_INTERVAL) {
       const newKeyPair = this.createActiveKeyPair();
       this.activeKeyKid = newKeyPair.kid;
     }

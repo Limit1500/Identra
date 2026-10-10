@@ -1,6 +1,5 @@
-import startHTTPServer from "./HTTPserver/server";
-import keyService from "./TCPserver/keys/keyService";
-import startTCPServer from "./TCPserver/server";
+import startHTTPServer from "./HTTP-server/server";
+import startTCPServer from "./TCP-server/server";
 
 async function startApplication() {
   startHTTPServer();
