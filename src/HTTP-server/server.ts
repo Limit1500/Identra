@@ -1,9 +1,9 @@
 import Fastify from "fastify";
-import { authRoutes } from "./auth/router";
 import errorHandler from "./error/handler";
 import cookie from "@fastify/cookie";
 import jwt from "@fastify/jwt";
-import keyService from "../keys/keyService";
+import keyService from "../keys/key.service";
+import { authRoutes } from "./modules/auth/router";
 
 const keyPair = keyService.getActivePair();
 

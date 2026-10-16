@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import AppError from "../../error/types";
+import AppError from "../error/types";
 
 async function authUser(req: FastifyRequest, _reply: FastifyReply) {
   try {

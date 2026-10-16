@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify";
 import AuthController from "./controller";
-import { loginSchema, signinSchema } from "./validation";
+import { loginSchema, signinSchema } from "./internal/validation";
+import authUser from "./internal/auth-user.middleware";
 
 export function authRoutes(server: FastifyInstance) {
   server.post("/login", {
@@ -14,4 +15,11 @@ export function authRoutes(server: FastifyInstance) {
   });
 
   server.post("/logout", { handler: AuthController.logout });
+
+  server.post("/refresh", {
+    preHandler: authUser,
+    handler: AuthController.refresh,
+  });
+
+  server.get("/me", { preHandler: authUser, handler: AuthController.me });
 }

@@ -1,6 +1,6 @@
-import DatabaseService from "../../database/service";
 import argon2 from "argon2";
-import AppError from "../error/types";
+import DatabaseService from "../../../database/service";
+import AppError from "../../error/types";
 
 class AuthService {
   static async login(username: string, password: string) {

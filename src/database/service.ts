@@ -1,4 +1,4 @@
-import { prisma } from "./db-instance";
+import prisma from "./db-instance";
 
 class DatabaseService {
   static async getUserByEmail(email: string) {
@@ -10,7 +10,7 @@ class DatabaseService {
   }
 
   static async getUserByCredentials(username: string, password: string) {
-    return await prisma.Users.findUnique({
+    return await prisma.users.findUnique({
       where: {
         username,
         password,
@@ -19,7 +19,7 @@ class DatabaseService {
   }
 
   static async createUser(username: string, password: string, email: string) {
-    return await prisma.Users.create({
+    return await prisma.users.create({
       data: {
         username,
         password,
@@ -29,7 +29,7 @@ class DatabaseService {
   }
 
   static async deleteUser(userId: number) {
-    return await prisma.Users.delete({
+    return await prisma.users.delete({
       where: {
         id: userId,
       },

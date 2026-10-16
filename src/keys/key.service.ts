@@ -7,10 +7,10 @@ import {
   MODULUS_LENGTH,
   PRIVATE_KEY_FORMAT,
   PUBLIC_KEY_FORMAT,
-} from "./helpers/config";
-import type { KeyPair, PublicKeyInfo } from "./helpers/types";
-import StorageService from "./storageService";
-import { toPublicKeyInfo } from "./helpers/wrapper";
+} from "./internal/config";
+import type { KeyPair, PublicKeyInfo } from "./internal/types";
+import StorageService from "./storage.service";
+import { toPublicKeyInfo } from "./internal/wrapper";
 
 class KeyService {
   private keys: KeyPair[] = [];

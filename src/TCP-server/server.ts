@@ -1,5 +1,5 @@
 import net from "node:net";
-import keyService from "../keys/keyService";
+import keyService from "../keys/key.service";
 
 export default function startTCPServer() {
   const server = net.createServer((socket) => {

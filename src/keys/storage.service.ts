@@ -7,9 +7,9 @@ import {
   writeFileSync,
 } from "node:fs";
 import { resolve } from "node:path";
-import type { KeyPair } from "./helpers/types";
-import isValidKeyPair from "./helpers/validation";
-import { activeKeyDirectory, allKeysDirectory } from "./helpers/config";
+import type { KeyPair } from "./internal/types";
+import isValidKeyPair from "./internal/validation";
+import { activeKeyDirectory, allKeysDirectory } from "./internal/config";
 
 class StorageService {
   // storage keys methods

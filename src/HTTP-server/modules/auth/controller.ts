@@ -1,7 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { loginBody, signinBody } from "./types";
-import TokenService from "./token.service";
+import { loginBody, signinBody } from "./internal/types";
 import AuthService from "./service";
+import DatabaseService from "../../../database/service";
+import TokenService from "./internal/token.service";
 
 class AuthController {
   static async signin(
@@ -47,6 +48,33 @@ class AuthController {
       })
       .code(200)
       .send({ message: "Logout successful" });
+  }
+
+  static async refresh(req: FastifyRequest, reply: FastifyReply) {
+    const { userId, username } = req.user as {
+      userId: number;
+      username: string;
+    };
+    const token = await TokenService.createToken(userId, username);
+
+    return reply
+      .setCookie("token", token, {
+        path: "/",
+        httpOnly: true,
+        secure: false,
+        sameSite: "lax",
+      })
+      .send({
+        message: "Login successful",
+      });
+  }
+
+  static async me(req: FastifyRequest, reply: FastifyReply) {
+    const { username } = req.user as {
+      username: string;
+    };
+
+    return await DatabaseService.getUserByUsername(username);
   }
 }
 

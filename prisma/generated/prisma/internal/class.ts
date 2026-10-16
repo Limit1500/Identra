@@ -56,8 +56,8 @@ const config: runtime.GetPrismaClientConfig = {
       }
     }
   },
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../prisma/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Users {\n  id       Int    @id @default(autoincrement())\n  username String @unique\n  email    String @unique\n  password String\n\n  firstSeen DateTime @default(now())\n  lastSeen  DateTime @default(now())\n\n  isActive Boolean @default(true)\n}\n",
-  "inlineSchemaHash": "8bc1c083ca31d05684121f5e18789563606de1cc3092ed91e1e91f2418d6a993",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../prisma/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Users {\n  id        Int      @id @default(autoincrement())\n  username  String   @unique\n  email     String   @unique\n  password  String\n  firstSeen DateTime @default(now())\n  lastSeen  DateTime @default(now())\n  isActive  Boolean  @default(true)\n}\n",
+  "inlineSchemaHash": "b1d8c6d171d9861fae7db7764ccd05071ea915f9fcc61469881595d1d7864f7f",
   "copyEngine": true,
   "runtimeDataModel": {
     "models": {},

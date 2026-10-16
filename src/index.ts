@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 import startHTTPServer from "./HTTP-server/server";
 import startTCPServer from "./TCP-server/server";
 
