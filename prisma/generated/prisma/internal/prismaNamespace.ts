@@ -390,7 +390,8 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
-  Users: 'Users'
+  Users: 'Users',
+  Tokens: 'Tokens'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -406,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "users"
+    modelProps: "users" | "tokens"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -484,6 +485,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Tokens: {
+      payload: Prisma.$TokensPayload<ExtArgs>
+      fields: Prisma.TokensFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.TokensFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TokensPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.TokensFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TokensPayload>
+        }
+        findFirst: {
+          args: Prisma.TokensFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TokensPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.TokensFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TokensPayload>
+        }
+        findMany: {
+          args: Prisma.TokensFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TokensPayload>[]
+        }
+        create: {
+          args: Prisma.TokensCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TokensPayload>
+        }
+        createMany: {
+          args: Prisma.TokensCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.TokensCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TokensPayload>[]
+        }
+        delete: {
+          args: Prisma.TokensDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TokensPayload>
+        }
+        update: {
+          args: Prisma.TokensUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TokensPayload>
+        }
+        deleteMany: {
+          args: Prisma.TokensDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.TokensUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.TokensUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TokensPayload>[]
+        }
+        upsert: {
+          args: Prisma.TokensUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$TokensPayload>
+        }
+        aggregate: {
+          args: Prisma.TokensAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateTokens>
+        }
+        groupBy: {
+          args: Prisma.TokensGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TokensGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.TokensCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.TokensCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -528,12 +603,25 @@ export const UsersScalarFieldEnum = {
   username: 'username',
   email: 'email',
   password: 'password',
+  emailVerified: 'emailVerified',
   firstSeen: 'firstSeen',
   lastSeen: 'lastSeen',
   isActive: 'isActive'
 } as const
 
 export type UsersScalarFieldEnum = (typeof UsersScalarFieldEnum)[keyof typeof UsersScalarFieldEnum]
+
+
+export const TokensScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  token: 'token',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt',
+  userId: 'userId'
+} as const
+
+export type TokensScalarFieldEnum = (typeof TokensScalarFieldEnum)[keyof typeof TokensScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -587,6 +675,13 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -601,9 +696,16 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
- * Reference to a field of type 'Boolean'
+ * Reference to a field of type 'TokenTypes'
  */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+export type EnumTokenTypesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TokenTypes'>
+    
+
+
+/**
+ * Reference to a field of type 'TokenTypes[]'
+ */
+export type ListEnumTokenTypesFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TokenTypes[]'>
     
 
 
@@ -708,6 +810,7 @@ export interface PrismaClientOptions {
 }
 export type GlobalOmitConfig = {
   users?: Prisma.UsersOmit
+  tokens?: Prisma.TokensOmit
 }
 
 /* Types for Logging */

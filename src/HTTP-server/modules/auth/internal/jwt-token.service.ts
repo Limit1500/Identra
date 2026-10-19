@@ -1,6 +1,6 @@
-import keyService from "../../keys/key.service";
+import keyService from "../../../../keys/key.service";
 
-class TokenService {
+class JwtTokenService {
   static async createToken(userId: number, username: string) {
     const { importPKCS8, SignJWT } = await import("jose");
 
@@ -22,4 +22,4 @@ class TokenService {
   }
 }
 
-export default TokenService;
+export default JwtTokenService;

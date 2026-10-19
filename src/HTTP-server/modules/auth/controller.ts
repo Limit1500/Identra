@@ -1,13 +1,13 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { loginBody, signinBody } from "./internal/types";
 import AuthService from "./service";
-import DatabaseService from "../../../database/service";
-import TokenService from "./internal/token.service";
+import UserDatabaseService from "../../../database/users/service";
+import JwtTokenService from "./internal/jwt-token.service";
 
 class AuthController {
   static async signin(
     req: FastifyRequest<{ Body: signinBody }>,
-    reply: FastifyReply
+    reply: FastifyReply,
   ) {
     const { username, password, email } = req.body;
 
@@ -18,13 +18,13 @@ class AuthController {
 
   static async login(
     req: FastifyRequest<{ Body: loginBody }>,
-    reply: FastifyReply
+    reply: FastifyReply,
   ) {
     const { username, password } = req.body;
 
     const user = await AuthService.login(username, password);
 
-    const token = await TokenService.createToken(user.id, username);
+    const token = await JwtTokenService.createToken(user.id, username);
 
     return reply
       .setCookie("token", token, {
@@ -55,7 +55,7 @@ class AuthController {
       userId: number;
       username: string;
     };
-    const token = await TokenService.createToken(userId, username);
+    const token = await JwtTokenService.createToken(userId, username);
 
     return reply
       .setCookie("token", token, {
@@ -74,7 +74,7 @@ class AuthController {
       username: string;
     };
 
-    return await DatabaseService.getUserByUsername(username);
+    return await UserDatabaseService.getUserByUsername(username);
   }
 }
 

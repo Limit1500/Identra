@@ -8,12 +8,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum TokenTypes {
+  EMAIL_VERIFICATION
+  PASSWORD_RESET
+}
+
 model Users {
   id        Int      @id @default(autoincrement())
   username  String   @unique
   email     String   @unique
   password  String
+  
+  emailVerified Boolean  @default(false)
+
   firstSeen DateTime @default(now())
   lastSeen  DateTime @default(now())
   isActive  Boolean  @default(true)
+
+  tokens        Tokens[]
+}
+
+model Tokens {
+  id        Int      @id @default(autoincrement())
+  type TokenTypes
+  token String @unique
+
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  userId    Int
+  user      Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type])
 }

@@ -1,12 +1,12 @@
 import argon2 from "argon2";
-import DatabaseService from "../../../database/service";
+import UserDatabaseService from "../../../database/users/service";
 import AppError from "../../error/types";
 
 class AuthService {
   static async login(username: string, password: string) {
     const passwordHash = await argon2.hash(password);
 
-    const user = await DatabaseService.getUserByUsername(username);
+    const user = await UserDatabaseService.getUserByUsername(username);
 
     if (!user) {
       throw new AppError(400, "User not found");
@@ -26,11 +26,13 @@ class AuthService {
   static async signin(username: string, password: string, email: string) {
     const passwordHash = await argon2.hash(password);
 
-    const usernameExists = (await DatabaseService.getUserByUsername(username))
+    const usernameExists = (await UserDatabaseService.getUserByUsername(
+      username,
+    ))
       ? true
       : false;
 
-    const emailExists = (await DatabaseService.getUserByEmail(email))
+    const emailExists = (await UserDatabaseService.getUserByEmail(email))
       ? true
       : false;
 
@@ -40,7 +42,7 @@ class AuthService {
       throw new AppError(400, "Email already exists");
     }
 
-    await DatabaseService.createUser(username, passwordHash, email);
+    await UserDatabaseService.createUser(username, passwordHash, email);
   }
 }
 
