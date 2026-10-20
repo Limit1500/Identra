@@ -17,6 +17,6 @@ export default function startTCPServer() {
   });
 
   server.listen(process.env.TCP_PORT, () => {
-    console.log(`Server is listening on port ${process.env.TCP_PORT}`);
+    console.log(`TCP server is listening on port ${process.env.TCP_PORT}`);
   });
 }

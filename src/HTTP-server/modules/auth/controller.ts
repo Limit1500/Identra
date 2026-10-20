@@ -7,7 +7,7 @@ import JwtTokenService from "./internal/jwt-token.service";
 class AuthController {
   static async signin(
     req: FastifyRequest<{ Body: signinBody }>,
-    reply: FastifyReply,
+    reply: FastifyReply
   ) {
     const { username, password, email } = req.body;
 
@@ -18,7 +18,7 @@ class AuthController {
 
   static async login(
     req: FastifyRequest<{ Body: loginBody }>,
-    reply: FastifyReply,
+    reply: FastifyReply
   ) {
     const { username, password } = req.body;
 
@@ -65,7 +65,7 @@ class AuthController {
         sameSite: "lax",
       })
       .send({
-        message: "Login successful",
+        message: "Token refreshed",
       });
   }
 

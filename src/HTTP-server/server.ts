@@ -12,7 +12,9 @@ export const server = Fastify({
 });
 
 server.register(authRoutes, { prefix: "/auth" });
+
 server.register(cookie);
+
 server.register(jwt, {
   secret: {
     private: keyPair.privateKey,
@@ -21,6 +23,10 @@ server.register(jwt, {
   sign: {
     algorithm: "RS256",
     expiresIn: "15m",
+  },
+  cookie: {
+    cookieName: "token",
+    signed: false,
   },
 });
 
