@@ -19,7 +19,7 @@ export function updateRoutes(server: FastifyInstance) {
     handler: UpdateController.verifyEmail,
   });
 
-  server.get("/verify-email/confirm/:token", {
+  server.post("/verify-email/confirm/:token", {
     handler: UpdateController.confirmEmail,
   });
 
@@ -34,7 +34,7 @@ export function updateRoutes(server: FastifyInstance) {
     handler: UpdateController.resetPassword,
   });
 
-  server.get("/reset-password/confirm/:token", {
+  server.post("/reset-password/confirm/:token", {
     schema: newPasswordSchema,
     handler: UpdateController.confirmPassword,
   });

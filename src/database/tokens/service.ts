@@ -41,6 +41,16 @@ class TokenDatabaseService {
     return await prisma.tokens.findUnique({ where: { token: tokenHash } });
   }
 
+  static async deleteExpiredTokens() {
+    return await prisma.tokens.deleteMany({
+      where: {
+        expiresAt: {
+          lt: new Date(),
+        },
+      },
+    });
+  }
+
   private static generateToken(): string {
     return randomBytes(32).toString("hex");
   }

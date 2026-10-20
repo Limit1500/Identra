@@ -3,7 +3,11 @@ import errorHandler from "./error/handler";
 import cookie from "@fastify/cookie";
 import jwt from "@fastify/jwt";
 import keyService from "../keys/key.service";
+import rateLimit from "@fastify/rate-limit";
 import { authRoutes } from "./modules/auth/router";
+import { updateRoutes } from "./modules/update/router";
+import CleanupService from "../cleanup/service";
+import { env } from "../config/environment.var";
 
 const keyPair = keyService.getActivePair();
 
@@ -11,9 +15,16 @@ export const server = Fastify({
   logger: true,
 });
 
-server.register(authRoutes, { prefix: "/auth" });
+server.setErrorHandler(errorHandler);
 
+server.register(updateRoutes, { prefix: "/update" });
+server.register(authRoutes, { prefix: "/auth" });
 server.register(cookie);
+
+server.register(rateLimit, {
+  max: Number(env.RATE_LIMIT),
+  timeWindow: "1 minute",
+});
 
 server.register(jwt, {
   secret: {
@@ -30,15 +41,15 @@ server.register(jwt, {
   },
 });
 
-server.setErrorHandler(errorHandler);
-
 export default function startHTTPServer() {
   server.listen(
     {
-      port: Number(process.env.HTTP_PORT),
+      port: Number(env.HTTP_PORT),
     },
     () => {
-      console.log(`HTTP server is listening on port ${process.env.HTTP_PORT}`);
+      console.log(`HTTP server is listening on port ${env.HTTP_PORT}`);
     }
   );
 }
+
+CleanupService.start();

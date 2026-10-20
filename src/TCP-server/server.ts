@@ -1,5 +1,6 @@
 import net from "node:net";
 import keyService from "../keys/key.service";
+import { env } from "../config/environment.var";
 
 export default function startTCPServer() {
   const server = net.createServer((socket) => {
@@ -16,7 +17,7 @@ export default function startTCPServer() {
     }
   });
 
-  server.listen(process.env.TCP_PORT, () => {
-    console.log(`TCP server is listening on port ${process.env.TCP_PORT}`);
+  server.listen(env.TCP_PORT, () => {
+    console.log(`TCP server is listening on port ${env.TCP_PORT}`);
   });
 }
