@@ -9,7 +9,11 @@ class AuthService {
     const user = await UserDatabaseService.getUserByUsername(username);
 
     if (!user) {
-      throw new AppError(400, "User not found");
+      throw new AppError(404, "User not found");
+    }
+
+    if (user.isActive === false) {
+      throw new AppError(401, "User dezactivated");
     }
 
     const { password: hashedPassword } = user;

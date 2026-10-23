@@ -14,7 +14,9 @@ class AuthController {
 
     await AuthService.signin(username, password, email);
 
-    return reply.code(200).send({ message: "Signin successful" });
+    return reply.code(200).send({
+      message: "Signin successful",
+    });
   }
 
   static async login(
@@ -25,7 +27,7 @@ class AuthController {
 
     const user = await AuthService.login(username, password);
 
-    await SessionDatabaseService.deleteAllSessions(user.id);
+    await SessionDatabaseService.deleteUserSessions(user.id);
 
     const session = await SessionDatabaseService.createSession(user.id);
 
@@ -56,7 +58,9 @@ class AuthController {
         path: "/",
       })
       .code(200)
-      .send({ message: "Logout successful" });
+      .send({
+        message: "Logout successful",
+      });
   }
 
   static async refresh(req: FastifyRequest, reply: FastifyReply) {
@@ -65,6 +69,7 @@ class AuthController {
       sessionId: number;
       username: string;
     };
+
     const token = await JwtTokenService.createToken(
       userId,
       username,

@@ -5,7 +5,6 @@ import { EmailType } from "../../../../emailer/types";
 import TokenDatabseService from "../../../../database/tokens/service";
 import { TokenTypes } from "../../../../../prisma/generated/prisma/enums";
 import { TokenType } from "../../../../database/tokens/types";
-import { createHash } from "crypto";
 import argon2 from "argon2";
 
 class UpdateService {

@@ -14,12 +14,17 @@ export default function authRoutes(server: FastifyInstance) {
     handler: AuthController.signin,
   });
 
-  server.post("/logout", { handler: AuthController.logout });
+  server.post("/logout", {
+    handler: AuthController.logout,
+  });
 
   server.post("/refresh", {
     preHandler: authUser,
     handler: AuthController.refresh,
   });
 
-  server.get("/me", { preHandler: authUser, handler: AuthController.me });
+  server.get("/me", {
+    preHandler: authUser,
+    handler: AuthController.me,
+  });
 }

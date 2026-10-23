@@ -4,11 +4,11 @@ import cookie from "@fastify/cookie";
 import jwt from "@fastify/jwt";
 import keyService from "../keys/key.service";
 import rateLimit from "@fastify/rate-limit";
-import { updateRoutes } from "./modules/users/update/router";
 import CleanupService from "../cleanup/service";
 import { env } from "../config/environment.var";
 import accountRoutes from "./modules/admins/account/routes";
 import sessionRoutes from "./modules/admins/session/routes";
+import { updateRoutes } from "./modules/users/update/router";
 import authRoutes from "./modules/users/auth/router";
 
 const keyPair = keyService.getActivePair();

@@ -1,6 +1,10 @@
 import prisma from "../db-instance";
 
 class UserDatabaseService {
+  static async getAllUsers() {
+    return await prisma.users.findMany();
+  }
+
   static async getUserByEmail(email: string) {
     return await prisma.users.findFirst({ where: { email } });
   }
@@ -44,6 +48,15 @@ class UserDatabaseService {
     return prisma.users.update({
       where: { id: userId },
       data: { emailVerified: true },
+    });
+  }
+
+  static async setUserStatus(userId: number, status: boolean) {
+    return await prisma.users.update({
+      where: { id: userId },
+      data: {
+        isActive: status,
+      },
     });
   }
 

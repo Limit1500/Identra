@@ -7,6 +7,7 @@ import {
   usernameSchema,
 } from "./internal/validation";
 import authUser from "../../../middlewares/auth-user";
+
 export function updateRoutes(server: FastifyInstance) {
   server.post("/change-email", {
     preHandler: authUser,
