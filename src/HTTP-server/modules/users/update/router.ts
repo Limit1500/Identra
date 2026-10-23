@@ -1,5 +1,4 @@
 import { FastifyInstance } from "fastify";
-import authUser from "../auth/internal/auth-user.middleware";
 import UpdateController from "./controller";
 import {
   emailSchema,
@@ -7,6 +6,7 @@ import {
   newPasswordSchema,
   usernameSchema,
 } from "./internal/validation";
+import authUser from "../../../middlewares/auth-user";
 export function updateRoutes(server: FastifyInstance) {
   server.post("/change-email", {
     preHandler: authUser,

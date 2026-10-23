@@ -54,3 +54,13 @@ export type Users = Prisma.UsersModel
  * 
  */
 export type Tokens = Prisma.TokensModel
+/**
+ * Model Sessions
+ * 
+ */
+export type Sessions = Prisma.SessionsModel
+/**
+ * Model Admins
+ * 
+ */
+export type Admins = Prisma.AdminsModel

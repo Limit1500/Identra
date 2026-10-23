@@ -10,4 +10,6 @@
  */
 export type * from './models/Users.js'
 export type * from './models/Tokens.js'
+export type * from './models/Sessions.js'
+export type * from './models/Admins.js'
 export type * from './commonInputTypes.js'

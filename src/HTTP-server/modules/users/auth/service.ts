@@ -1,6 +1,6 @@
 import argon2 from "argon2";
-import UserDatabaseService from "../../../database/users/service";
-import AppError from "../../error/types";
+import UserDatabaseService from "../../../../database/users/service";
+import AppError from "../../../error/types";
 
 class AuthService {
   static async login(username: string, password: string) {
@@ -27,7 +27,7 @@ class AuthService {
     const passwordHash = await argon2.hash(password);
 
     const usernameExists = (await UserDatabaseService.getUserByUsername(
-      username,
+      username
     ))
       ? true
       : false;

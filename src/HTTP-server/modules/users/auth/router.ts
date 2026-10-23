@@ -1,9 +1,9 @@
 import { FastifyInstance } from "fastify";
 import AuthController from "./controller";
 import { loginSchema, signinSchema } from "./internal/validation";
-import authUser from "./internal/auth-user.middleware";
+import authUser from "../../../middlewares/auth-user";
 
-export function authRoutes(server: FastifyInstance) {
+export default function authRoutes(server: FastifyInstance) {
   server.post("/login", {
     schema: loginSchema,
     handler: AuthController.login,

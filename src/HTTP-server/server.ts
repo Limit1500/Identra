@@ -4,10 +4,12 @@ import cookie from "@fastify/cookie";
 import jwt from "@fastify/jwt";
 import keyService from "../keys/key.service";
 import rateLimit from "@fastify/rate-limit";
-import { authRoutes } from "./modules/auth/router";
-import { updateRoutes } from "./modules/update/router";
+import { updateRoutes } from "./modules/users/update/router";
 import CleanupService from "../cleanup/service";
 import { env } from "../config/environment.var";
+import accountRoutes from "./modules/admins/account/routes";
+import sessionRoutes from "./modules/admins/session/routes";
+import authRoutes from "./modules/users/auth/router";
 
 const keyPair = keyService.getActivePair();
 
@@ -19,6 +21,8 @@ server.setErrorHandler(errorHandler);
 
 server.register(updateRoutes, { prefix: "/update" });
 server.register(authRoutes, { prefix: "/auth" });
+server.register(accountRoutes, { prefix: "/account" });
+server.register(sessionRoutes, { prefix: "/session" });
 server.register(cookie);
 
 server.register(rateLimit, {

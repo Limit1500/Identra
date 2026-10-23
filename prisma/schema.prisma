@@ -26,6 +26,8 @@ model Users {
   isActive  Boolean  @default(true)
 
   tokens        Tokens[]
+  sessions Sessions[]
+  admin Admins?
 }
 
 model Tokens {
@@ -40,4 +42,16 @@ model Tokens {
   user      Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, type])
+}
+
+model Sessions {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      Users    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Admins {
+  userId Int   @id @unique
+  user   Users @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

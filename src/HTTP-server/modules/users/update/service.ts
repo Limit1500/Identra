@@ -1,10 +1,10 @@
-import UserDatabaseService from "../../../database/users/service";
-import AppError from "../../error/types";
-import { EmailService } from "../../../emailer/service";
-import { EmailType } from "../../../emailer/types";
-import TokenDatabseService from "../../../database/tokens/service";
-import { TokenTypes } from "../../../../prisma/generated/prisma/enums";
-import { TokenType } from "../../../database/tokens/types";
+import UserDatabaseService from "../../../../database/users/service";
+import AppError from "../../../error/types";
+import { EmailService } from "../../../../emailer/service";
+import { EmailType } from "../../../../emailer/types";
+import TokenDatabseService from "../../../../database/tokens/service";
+import { TokenTypes } from "../../../../../prisma/generated/prisma/enums";
+import { TokenType } from "../../../../database/tokens/types";
 import { createHash } from "crypto";
 import argon2 from "argon2";
 
@@ -30,10 +30,8 @@ class UpdateService {
   }
 
   static async confirmEmailVerification(token: string) {
-    const tokenHash = createHash("sha256").update(token).digest("hex");
-
     const storedToken: TokenType | null =
-      await TokenDatabseService.getTokenByHash(tokenHash);
+      await TokenDatabseService.getTokenByHash(token);
 
     if (
       storedToken === null ||
@@ -43,7 +41,7 @@ class UpdateService {
       throw new AppError(401, "Invalid token");
     }
 
-    await TokenDatabseService.deleteTokenByHash(tokenHash);
+    await TokenDatabseService.deleteTokenByHash(token);
     await UserDatabaseService.setEmailVerified(storedToken.userId);
   }
 
@@ -101,10 +99,8 @@ class UpdateService {
   }
 
   static async validateResetPassword(token: string, newPassword: string) {
-    const tokenHash = createHash("sha256").update(token).digest("hex");
-
     const storedToken: TokenType | null =
-      await TokenDatabseService.getTokenByHash(tokenHash);
+      await TokenDatabseService.getTokenByHash(token);
 
     if (
       storedToken === null ||
@@ -115,7 +111,7 @@ class UpdateService {
     }
     const newPasswordHash = await argon2.hash(newPassword);
 
-    await TokenDatabseService.deleteTokenByHash(tokenHash);
+    await TokenDatabseService.deleteTokenByHash(token);
     await UserDatabaseService.setNewPassword(
       storedToken.userId,
       newPasswordHash

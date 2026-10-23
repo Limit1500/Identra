@@ -16,7 +16,7 @@ export const emailSchema = {
 export const newAndCurrentPasswordSchema = {
   body: {
     type: "object",
-    required: ["newPassword", "currentPasword"],
+    required: ["newPassword", "currentPassword"],
     properties: {
       newPassword: {
         type: "string",

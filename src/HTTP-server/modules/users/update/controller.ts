@@ -1,6 +1,6 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import UpdateService from "./service";
-import UserDatabaseService from "../../../database/users/service";
+import UserDatabaseService from "../../../../database/users/service";
 
 class UpdateController {
   static async verifyEmail(req: FastifyRequest, reply: FastifyReply) {

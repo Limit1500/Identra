@@ -1,8 +1,9 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import { loginBody, signinBody } from "./internal/types";
 import AuthService from "./service";
-import UserDatabaseService from "../../../database/users/service";
 import JwtTokenService from "./internal/jwt-token.service";
+import SessionDatabaseService from "../../../../database/sessions/service";
+import UserDatabaseService from "../../../../database/users/service";
 
 class AuthController {
   static async signin(
@@ -24,7 +25,15 @@ class AuthController {
 
     const user = await AuthService.login(username, password);
 
-    const token = await JwtTokenService.createToken(user.id, username);
+    await SessionDatabaseService.deleteAllSessions(user.id);
+
+    const session = await SessionDatabaseService.createSession(user.id);
+
+    const token = await JwtTokenService.createToken(
+      user.id,
+      username,
+      session.id
+    );
 
     return reply
       .setCookie("token", token, {
@@ -38,7 +47,7 @@ class AuthController {
       });
   }
 
-  static async logout(_req: FastifyRequest, reply: FastifyReply) {
+  static async logout(req: FastifyRequest, reply: FastifyReply) {
     return reply
       .clearCookie("token", {
         httpOnly: true,
@@ -51,11 +60,16 @@ class AuthController {
   }
 
   static async refresh(req: FastifyRequest, reply: FastifyReply) {
-    const { userId, username } = req.user as {
+    const { userId, username, sessionId } = req.user as {
       userId: number;
+      sessionId: number;
       username: string;
     };
-    const token = await JwtTokenService.createToken(userId, username);
+    const token = await JwtTokenService.createToken(
+      userId,
+      username,
+      sessionId
+    );
 
     return reply
       .setCookie("token", token, {
